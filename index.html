@@ -440,7 +440,7 @@
       <div class="title-line">Software Development Engineer II</div>
     </div>
     <div class="contact-block">
-      <a href="/cdn-cgi/l/email-protection#ea9c8899829f88828b87aa8d878b8386c4898587"><span class="__cf_email__" data-cfemail="483e2a3b203d2a202925082f25292124662b2725">[email&#160;protected]</span></a><br/>
+      <a id="hdr-email" href="#" onclick="revealEmail(this);return false;">show email</a><br/>
       +91 79069 28736<br/>
       Hyderabad, India<br/>
       <a href="https://linkedin.com/in/vbshubham" target="_blank">linkedin.com/in/vbshubham</a>
@@ -558,7 +558,7 @@
     <div class="footer-note">© 2026 Shubham Pandey</div>
     <div class="footer-note">
       Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a> ·
-      <a href="mailto:vbshubham@gmail.com">Get in touch</a>
+      <a href="#" onclick="revealEmail(this);return false;">Get in touch</a>
     </div>
   </footer>
 
@@ -583,6 +583,21 @@
 <div class="toast" id="toast">✓ Link copied to clipboard</div>
 
 <script>
+  // Build email at runtime so bots can't harvest it
+  (function() {
+    const u = 'vbshubham', d = 'gmail.com';
+    const email = u + '@' + d;
+    const hdr = document.getElementById('hdr-email');
+    if (hdr) { hdr.textContent = email; hdr.href = 'mailto:' + email; }
+  })();
+
+  function revealEmail(el) {
+    const u = 'vbshubham', d = 'gmail.com';
+    const email = u + '@' + d;
+    el.textContent = email;
+    el.href = 'mailto:' + email;
+  }
+
   function downloadPDF() {
     window.print();
   }
