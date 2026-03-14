@@ -341,10 +341,92 @@
       .job-meta { white-space: normal; }
     }
 
+    /* ── FLOATING ACTION BAR ── */
+    .action-bar {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 500;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.1rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      white-space: nowrap;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    }
+
+    .action-btn:active { transform: translateY(0); }
+
+    .btn-pdf {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-share {
+      background: var(--paper);
+      color: var(--ink);
+      border: 1.5px solid var(--rule);
+    }
+
+    .btn-linkedin {
+      background: #0a66c2;
+      color: #fff;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      z-index: 600;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 500px) {
+      .action-bar { bottom: 1rem; right: 1rem; }
+      .action-btn span { display: none; }
+      .action-btn { padding: 0.75rem; }
+    }
+
     @media print {
       body::before { display: none; }
       section, header { opacity: 1 !important; animation: none !important; }
       .container { padding: 1.5rem; }
+      .action-bar, .toast { display: none !important; }
     }
   </style>
 </head>
@@ -358,7 +440,7 @@
       <div class="title-line">Software Development Engineer II</div>
     </div>
     <div class="contact-block">
-      <a href="mailto:vbshubham@gmail.com">vbshubham@gmail.com</a><br/>
+      <a href="/cdn-cgi/l/email-protection#ea9c8899829f88828b87aa8d878b8386c4898587"><span class="__cf_email__" data-cfemail="483e2a3b203d2a202925082f25292124662b2725">[email&#160;protected]</span></a><br/>
       +91 79069 28736<br/>
       Hyderabad, India<br/>
       <a href="https://linkedin.com/in/vbshubham" target="_blank">linkedin.com/in/vbshubham</a>
@@ -481,5 +563,38 @@
   </footer>
 
 </div>
+
+<!-- FLOATING ACTION BAR -->
+<div class="action-bar">
+  <button class="action-btn btn-pdf" onclick="downloadPDF()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <span>Download PDF</span>
+  </button>
+  <button class="action-btn btn-share" onclick="copyLink()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    <span>Copy Link</span>
+  </button>
+  <a class="action-btn btn-linkedin" href="https://linkedin.com/in/vbshubham" target="_blank">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    <span>LinkedIn</span>
+  </a>
+</div>
+
+<div class="toast" id="toast">✓ Link copied to clipboard</div>
+
+<script>
+  function downloadPDF() {
+    window.print();
+  }
+  function copyLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    });
+  }
+</script>
+
 </body>
 </html>
